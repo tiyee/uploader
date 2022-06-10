@@ -1,0 +1,45 @@
+{
+  "name": "uploader.tiyee.com.cn",
+  "version": "1.0.0",
+  "repository": "git@github.com:tiyee/uploader.git",
+  "author": "tiyee <tiyee@live.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "dev": "export NODE_ENV=developemnt&& rollup -c rollup.config.js ",
+    "build": "rm -fr dist && export NODE_ENV=production && rollup -c rollup.config.js"
+  },
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "qs": "latest",
+    "spark-md5": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest",
+    "@babel/preset-react": "latest",
+    "@rollup/plugin-babel": "latest",
+    "@rollup/plugin-commonjs": "latest",
+    "@rollup/plugin-node-resolve": "latest",
+    "@rollup/plugin-replace": "latest",
+    "@types/qs": "latest",
+    "@types/spark-md5": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-react": "latest",
+    "prettier": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "latest",
+    "rollup-plugin-eslint": "latest",
+    "rollup-plugin-prettier": "latest",
+    "rollup-plugin-terser": "latest",
+    "rollup-plugin-tslint": "latest",
+    "rollup-plugin-typescript2": "latest",
+    "tslib": "latest",
+    "typescript": "latest"
+  }
+}

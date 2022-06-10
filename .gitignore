@@ -1,0 +1,19 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+**/.idea/
+# Local History for Visual Studio Code
+.history/
+node_modules
+*.DS_Store
+
+yarn.lock
+**/bin/**
+/dist/**
+yarn.lock
+yarn-error.log
+**/node_modules/**
+**/go.sum
