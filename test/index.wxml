@@ -1,2 +1,0 @@
-<!--pages/test/index.wxml-->
-<button bindtap="click" type="primary">页面主操作 Normal</button>
