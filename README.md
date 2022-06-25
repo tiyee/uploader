@@ -8,17 +8,6 @@
 1.  html页面直接引用dist文件，用法参考`demo.html`
 2.  es环境可以直接引用`dist`文件夹的**index.esm.js**文件，也可以直接引用`src/uploader.tsx`
 
-
-** 目前server适配了阿里oss，记得修改`server/pkg/controller/oss.go`
-
-```golang
-const BUCKET = "wizarmon"
-const HOST = "oss-cn-beijing.aliyuncs.com"
-const AccessKeyId = "<AccessKeyId>"
-const KeySecret = "<KeySecret>"
-const BaseUrl = "https://img.tiyee.cn"
-```
-
 ## 使用方法(html)
 ```html
 <body >
@@ -126,3 +115,8 @@ const BaseUrl = "https://img.tiyee.cn"
 
 #### body
 json格式，所有分片的编号和摘要，Array<{index:number,etag:string}>
+
+
+## 微信小程序
+
+用法与h5一致，参考wxm文件夹下的代码
