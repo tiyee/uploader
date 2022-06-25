@@ -1,0 +1,2 @@
+<!--pages/test/index.wxml-->
+<button bindtap="click" type="primary">点击选择图片</button>
