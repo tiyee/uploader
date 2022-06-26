@@ -16,7 +16,7 @@ const wxFileDigest = (obj, fn) => {
     tempFilePath,
     totalSize,
   } = obj,
-    chunkSize = 2097152, // Read in chunks of 2MB
+    chunkSize = 2014*1024, // Read in chunks of 1MB
     chunks = Math.ceil(totalSize / chunkSize),
     spark = new SparkMD5.ArrayBuffer()
 
@@ -50,14 +50,17 @@ class WxUploader {
   constructor(ctx, tempFilePath) {
     this.ctx = ctx
     this.tempFilePath = tempFilePath
-    this.chunkSize = this.ctx.chunkSize || 2097152 //defalut 2M
+    this.chunkSize = this.ctx.chunkSize || 1024*1024 //defalut 1M
     this.chunks = []
+    this.uploadedSize=0
+    this.totalChunks=0
   }
   // 主要是获取文件信息
   _beforeInit = (cb) => {
     const _this = this;
     const fn = () => {
       const chunks = Math.ceil(_this.totalSize / _this.chunkSize)
+      _this.totalChunks=chunks
       _this.maxConcurrency = Math.min(chunks, _this.ctx.maxConcurrency || 5)
       _this.tasks = Array.from({ length: chunks }, (_, index) => {
         return index
@@ -145,26 +148,26 @@ class WxUploader {
         const d = resp.data
         if (d.error === 0) {
           _this.chunks.push({ index: idx, etag: d.data.etag })
-          if (idx < _this.chunks.length - 1) {
-            _this.uploadedSize += _this.chunksize
+          if (idx < _this.totalChunks - 1) {
+            _this.uploadedSize += _this.chunkSize
           } else {
-            _this.uploadedSize += _this.totalSize - _this.chunksize * (_this.chunks.length - 1)
+            _this.uploadedSize += (_this.totalSize - _this.chunkSize * (_this.totalChunks - 1))
           }
-          _this.progress({ uploadedSize: _this.uploadedSize, totalSize: _this.totalSize })
+          _this.progress({total:_this.totalChunks,idx, uploadedSize: _this.uploadedSize, totalSize: _this.totalSize })
         }
         cb()
       }
     })
   }
   success = (d) => { console.log(d); this.complete(d) }
-  progress = (d) => { console.log(d) }
+  progress = (d) => { console.log('progress',d) }
   fail = (e) => { console.log(d) }
   complete = (e) => {
     console.log(e)
   }
   on(event, callback) {
     switch (event) {
-      case 'progess':
+      case 'progress':
         this.progress = callback
         break
       case 'retry':
@@ -184,10 +187,10 @@ class WxUploader {
     const _this = this;
     for (let i = 0; i < _this.chunks.length; i++) {
       const chunk = _this.chunks[i]
-      if (chunk.index < this.chunks.length - 1) {
-        this.uploadedSize += this.chunksize
+      if (chunk.index < this.totalChunks-1) {
+        this.uploadedSize += this.chunkSize
       } else {
-        this.uploadedSize += this.totalSize - this.chunksize * (this.chunks.length - 1)
+        this.uploadedSize += this.totalSize - this.chunkSize * (this.chunkSize - 1)
       }
       this.progress({ uploadedSize: this.uploadedSize, totalSize: this.totalSize })
     }
@@ -200,8 +203,8 @@ class WxUploader {
               resolve(index)
               return
             }
-            const start = task * _this.chunksize
-            const end = start + _this.chunksize >= _this.totalSize ? _this.totalSize : start + _this.chunksize
+            const start = task * _this.chunkSize
+            const end = start + _this.chunkSize >= _this.totalSize ? _this.totalSize : start + _this.chunkSize
             fileManager.readFile({
               filePath: _this.tempFilePath,
               position: start,
@@ -255,6 +258,8 @@ class WxUploader {
           this.uploadPart(d)
           break
         case 2:
+          this.uploadedSize=this.totalSize
+          this.progress({ uploadedSize: this.uploadedSize, totalSize: this.totalSize })
           this.success(d)
       }
       console.log(d)

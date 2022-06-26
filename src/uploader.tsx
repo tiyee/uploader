@@ -157,24 +157,25 @@ loadNext()
 export class Uploader {
     private ctx: IContext
     private file: File
-    private maxConcurrency = 5
-    private totalSize: number
+    private readonly maxConcurrency :number
+    private readonly  totalSize: number
     private uploadedSize = 0
-    private chunksize: number
+    private readonly  chunksize: number
     private digest = ''
     private fileDigest: IFileDigest
     private request: IRquest = httpClient
     private tasks: Array<number>
     private chunks: IChunk[] = []
+    private readonly  totalChunks:number
     constructor(ctx: IContext, file: File) {
         this.ctx = ctx
         this.file = file
         this.totalSize = file.size
         this.chunksize = this.ctx.chunkSize || 2097152 //defalut 2M
         this.ctx.withCredentials = this.ctx.withCredentials||'include'
-        const chunks = Math.ceil(this.totalSize / this.chunksize)
-        this.maxConcurrency = Math.min(chunks, this.ctx.maxConcurrency || 5)
-        this.tasks = Array.from({length: chunks}, (_, index) => {
+        this.totalChunks = Math.ceil(this.totalSize / this.chunksize)
+        this.maxConcurrency = Math.min(this.totalChunks, this.ctx.maxConcurrency || 5)
+        this.tasks = Array.from({length: this.totalChunks}, (_, index) => {
             return index
         })
         
@@ -197,10 +198,10 @@ export class Uploader {
             this.request(uploadUrl + '?' + params.toString(), 'POST', headers,withCredentials, blob, (d: IUploadPartRet) => {
                 if (d.error === 0) {
                     _this.chunks.push({index: idx, etag: d.data.etag})
-                    if (idx < _this.chunks.length - 1) {
+                    if (idx < _this.totalChunks - 1) {
                         _this.uploadedSize += _this.chunksize
                     } else {
-                        _this.uploadedSize += _this.totalSize - _this.chunksize * (_this.chunks.length - 1)
+                        _this.uploadedSize += _this.totalSize - _this.chunksize * (_this.totalChunks - 1)
                     }
                     _this.progress({uploadedSize: _this.uploadedSize, totalSize: _this.totalSize})
                 }
@@ -281,10 +282,10 @@ export class Uploader {
        
         for (let i = 0; i < this.chunks.length; i++) {
             const chunk = this.chunks[i]
-            if (chunk.index < this.chunks.length - 1) {
+            if (chunk.index < this.totalChunks - 1) {
                 this.uploadedSize += this.chunksize
             } else {
-                this.uploadedSize += this.totalSize - this.chunksize * (this.chunks.length - 1)
+                this.uploadedSize += this.totalSize - this.chunksize * (this.totalChunks - 1)
             }
             this.progress({uploadedSize: this.uploadedSize, totalSize: this.totalSize})
         }

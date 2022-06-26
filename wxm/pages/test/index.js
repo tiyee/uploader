@@ -1,12 +1,12 @@
-
-const WxUploader=require('../../libs/uploader')
+// pages/test/index.js
+const WxUploader = require('../../libs/uploader')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    percent: 0
   },
 
   /**
@@ -20,8 +20,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-      console.log( new sMD5.ArrayBuffer())
-    
+
+
 
   },
 
@@ -66,15 +66,17 @@ Page({
   onShareAppMessage: function () {
 
   },
-  click:function(){
+  click: function () {
+    const _this = this;
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
-      success (res) {
+      success(res) {
         // tempFilePath可以作为 img 标签的 src 属性显示图片
         const tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths);
+        _this.setData({percent:0})
         const ctx = {
           maxConcurrency: 5,
           totalSize: 0,
@@ -84,12 +86,32 @@ Page({
           touchUrl: 'https://tiyee.cn/2/uploader/init',
           testChunks: false,
           verfiyUrl: '',
-          headers: {Token: ''},
+          headers: { Token: '' },
           withCredentials: 'include',
-      }
-        const uploader=new  WxUploader(ctx,tempFilePaths[0])
+        }
+        const uploader = new WxUploader(ctx, tempFilePaths[0])
+        uploader.on('success',(e)=>{
+          wx.showModal({
+            title: '地址',
+            content: e.url,
+            success (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+
+        })
+        uploader.on('progress', (e) => {
+          _this.setData({
+            percent: e.totalSize === 0 ? 0 :parseInt( e.uploadedSize * 100 / e.totalSize)
+          })
+        }
+        )
         uploader.run()
-        
+
       }
     })
   }

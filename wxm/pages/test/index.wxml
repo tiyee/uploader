@@ -1,2 +1,8 @@
 <!--pages/test/index.wxml-->
-<button bindtap="click" type="primary">点击选择图片</button>
+<view style="width:90%;margin: 20rpx auto">
+  <button bindtap="click" type="primary">点击选择图片</button>
+<view class="progress-box">
+  <progress percent="{{percent}}" show-info stroke-width="3"/>
+</view>
+</view>
+
