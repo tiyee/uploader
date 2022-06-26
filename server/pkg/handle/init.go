@@ -42,14 +42,13 @@ func Init(c *fasthttp.RequestCtx) {
 		c.Success("application/json", ret(1, "数据不合法", size))
 		return
 	}
+	// todo: 此处应该根据digest去数据库或缓存判断一下，如果存在直接返回文件地址，但是我为了减少依赖，没有引用数据库和redis.
 	mime := http.DetectContentType(chunk)
 	ext := uploader.Ext(mime)
 	if ext == "" {
 		c.Success("application/json", ret(1, "文件类型不合法", size))
 		return
 	}
-	fmt.Println(string(digest), size, chunkSize, http.DetectContentType(chunk))
-	c.PostBody()
 	fn := func(m *uploader.Meta) {
 		m.ChunkSize = chunkSize
 		m.Object = "uploader/" + time.Now().Format("20060102150405") + "." + ext
