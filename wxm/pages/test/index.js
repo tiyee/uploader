@@ -1,5 +1,4 @@
-// pages/test/index.js
-const sMD5=require('../../libs/spark-md5')
+
 const WxUploader=require('../../libs/uploader')
 Page({
 
