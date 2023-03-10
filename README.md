@@ -67,9 +67,9 @@
 
 | 属性       | 类型     | 说明          |
 | ---------- | -------- | ------------- |
-| size       | `String` | 文件的 md5 值 |
-| chunk_size | `String` | 文件名        |
-| digest | `String` | 文件的 md5 值 |
+| size       | `String` | 整个文件的 md5 值 |
+| chunk_size | `String` | 整个文件的大小      |
+| digest | `String` | 整个文件的 md5 值 |
 
 #### body
 文件的前200个字节(为了获取文件的`mime`)
@@ -95,7 +95,7 @@
 | ---------- | -------- | ------------- |
 | index       | `String` | 分片序号，从0开始 |
 | upload_id | `String` | 传输凭证       |
-| digest | `String` | 文件的 md5 值 |
+| digest | `String` | 分片内容的 md5 值 |
 
 #### body
 传输的分片内容
@@ -111,7 +111,7 @@
 | 属性       | 类型     | 说明          |
 | ---------- | -------- | ------------- |
 | upload_id | `String` | 传输凭证       |
-| digest | `String` | 文件的 md5 值 |
+| digest | `String` | 整个文件的 md5 值 |
 
 #### body
 json格式，所有分片的编号和摘要，Array<{index:number,etag:string}>
