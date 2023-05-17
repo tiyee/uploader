@@ -1,6 +1,17 @@
 {
- // "presets": ["@babel/preset-env", "@babel/react"],
-  "presets": [["@babel/preset-env", { "targets": "last 1 version" }]],
- // "cacheDirectory": true,
-  "comments": false
+    // "presets": ["@babel/preset-env", "@babel/react"],
+    "presets": [
+        [
+            "@babel/preset-env",
+            {"targets": "last 1 version", "modules": false},
+            [
+                "@babel/preset-typescript",
+                {
+                    "optimizeConstEnums": true
+                }
+            ]
+        ]
+    ],
+    // "cacheDirectory": true,
+    "comments": false
 }
