@@ -1,26 +1,25 @@
 {
-  "transpileOnly": true,
-  "compilerOptions": {
-    "outDir": "./lib", // 输出目录
-    "declarationDir": "./lib/types", // 定义文件输出目录
-    "module": "ES2020", // 使用 ES2015 模块
-    "target": "es6", // 编译成 ES2015 (Babel 将做剩下的事情)
-    "allowSyntheticDefaultImports": true, // 看下面
-    "baseUrl": "src", // 可以相对这个目录 import 文件
-    "sourceMap": true, // 使 TypeScript 生成 sourcemaps
-    //"outDir": "ts-build", // 构建输出目录 (因为我们大部分时间都在使用 Webpack，所以不太相关)
-    "jsx": "preserve", // 开启 JSX 模式, 但是 "preserve" 告诉 TypeScript 不要转换它(我们将使用 Babel)
-    "strict": true,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "preserveConstEnums": true,
-    "lib": ["es7", "dom","ES2020"]
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.spec.ts", "webpack.config.js","dist","html","static"]
+    "transpileOnly": true,
+    "compilerOptions": {
+        "outDir": "./lib", // 输出目录
+        "declarationDir": "./lib/types", // 定义文件输出目录
+        "module": "ES2020", // 使用 ES2015 模块
+        "target": "es6", // 编译成 ES2015 (Babel 将做剩下的事情)
+        "allowSyntheticDefaultImports": true, // 看下面
+        "baseUrl": "src", // 可以相对这个目录 import 文件
+        "sourceMap": true, // 使 TypeScript 生成 sourcemaps
+        "jsx": "preserve", // 开启 JSX 模式, 但是 "preserve" 告诉 TypeScript 不要转换它(我们将使用 Babel)
+        "strict": true,
+        "declaration": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "preserveConstEnums": true,
+        "lib": ["es7", "dom", "ES2020"]
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "**/*.spec.ts", "webpack.config.js", "dist", "html", "static"]
 }

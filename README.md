@@ -135,7 +135,7 @@ json 格式，所有分片的编号和摘要，Array<{index:number,etag:string}>
 
 用法与 h5 基本一致，参考 wxm 文件夹下的代码
 
-因为小程序不支持`Blob`和`URLSearchParams`,所以规避了 BLob，同时根据`URLSearchParams`的 set 和 toString 方法，防了一个简单实现，然后通过泛型注入。
+因为小程序不支持`Blob`和`URLSearchParams`,所以规避了 BLob，同时根据`URLSearchParams`的 set 和 toString 方法，仿了一个简单实现，然后通过泛型注入。
 
 同时小程序获取文件 size 也是异步的，所以在方法实例的时候有所不同，实现差别如下
 
