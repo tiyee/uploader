@@ -24,7 +24,7 @@ const tsPlugin = tslint({
 
 // 基础配置
 const commonConf = {
-    input: getPath('./src/web.tsx'),
+    input: getPath('./src/wxm.tsx'),
     plugins: [
         globals(),
         builtins(),
@@ -48,17 +48,7 @@ const commonConf = {
 // 需要导出的模块类型
 const outputMap = [
     {
-        file: packageJSON.main, // 通用模块
-        format: 'umd',
-        name: 'uploader',
-    },
-    {
-        file: packageJSON.module, // es6模块
-        format: 'es',
-        name: 'uploader',
-    },
-    {
-        file: packageJSON.cjs, // cjs
+        file: 'dist/wxm/index.cjs.js', // cjs
         format: 'cjs',
         name: 'uploader',
     },

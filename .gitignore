@@ -17,3 +17,4 @@ yarn.lock
 yarn-error.log
 **/node_modules/**
 **/go.sum
+/.vscode
