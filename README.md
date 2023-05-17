@@ -8,6 +8,8 @@
 
 # build
 
+在 dist 文件有已经编译好的文件，当然，你也可以自己编译
+
 先安装依赖
 
 > yarn install
