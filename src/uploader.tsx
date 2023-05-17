@@ -98,7 +98,7 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
     private digest = ''
     private tasks: Array<number>
     private readonly maxConcurrency: number
-    constructor(ctx: IContext, f: F, r: R, private testType: new () => USP) {
+    constructor(ctx: IContext, f: F, r: R, private uspType: new () => USP) {
         this.ctx = ctx
         this.f = f
         this.r = r
@@ -111,7 +111,7 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
         })
     }
     getNew(): USP {
-        return new this.testType()
+        return new this.uspType()
     }
     private init = (cb: (x: IInitRet) => void) => {
         const fn = (hexHash: string) => {
