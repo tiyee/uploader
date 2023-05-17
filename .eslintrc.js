@@ -2,11 +2,8 @@
 
 module.exports = {
     parser: '@typescript-eslint/parser',
-    extends: ["plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"],
-    plugins: [
-        "@typescript-eslint"
-    ],
+    extends: ['plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended'],
+    plugins: ['@typescript-eslint'],
     settings: {
         react: {
             pragma: 'React',
@@ -24,13 +21,13 @@ module.exports = {
         browser: true,
         node: false,
     },
-    rules:{
-        "@typescript-eslint/no-this-alias": [
-            "error",
+    rules: {
+        '@typescript-eslint/no-this-alias': [
+            'error',
             {
-              "allowDestructuring": true, // Allow `const { props, state } = this`; false by default
-              "allowedNames": ["_this"] // Allow `const vm= this`; `[]` by default
-            }
-          ]
-    }
+                allowDestructuring: true, // Allow `const { props, state } = this`; false by default
+                allowedNames: ['_this'], // Allow `const vm= this`; `[]` by default
+            },
+        ],
+    },
 }
