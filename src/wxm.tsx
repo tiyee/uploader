@@ -5,17 +5,31 @@ import SparkMD5 from 'spark-md5'
 import {IInitRet, IContext, IUploadPartRet} from 'uploader'
 
 class URLSearchParams implements IURLSearchParams {
-    private data: Record<string, string>
+    private data: Record<string, Array<string>>
     constructor() {
         this.data = {}
     }
     set(k: string, v: string): void {
-        this.data[k] = v
+        this.data[k] = [v]
+    }
+    append(k: string, v: string) {
+        if (k in this.data) {
+            this.data[k].push(v)
+        } else {
+            this.data[k] = [v]
+        }
+    }
+    delete(k: string) {
+        if (k in this.data) {
+            delete this.data[k]
+        }
     }
     toString(): string {
         const arr = new Array<string>()
         for (const k in this.data) {
-            arr.push(`${k}=${this.data[k]}`)
+            for (const v of this.data[k]) {
+                arr.push(`${k}=${v}`)
+            }
         }
         return arr.join('&')
     }

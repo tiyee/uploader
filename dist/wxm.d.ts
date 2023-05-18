@@ -6,6 +6,8 @@ declare class URLSearchParams implements IURLSearchParams {
     private data;
     constructor();
     set(k: string, v: string): void;
+    append(k: string, v: string): void;
+    delete(k: string): void;
     toString(): string;
 }
 declare class WxmFile implements IFileHandle {

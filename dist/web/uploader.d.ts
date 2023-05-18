@@ -59,7 +59,7 @@ export interface IUploadPartRet {
     upload_id: string;
 }
 export declare class Uploader<F extends IFileHandle, R extends IRequest, USP extends IURLSearchParams> {
-    private testType;
+    private uspType;
     readonly f: F;
     readonly r: R;
     private ctx;
@@ -71,7 +71,7 @@ export declare class Uploader<F extends IFileHandle, R extends IRequest, USP ext
     private digest;
     private tasks;
     private readonly maxConcurrency;
-    constructor(ctx: IContext, f: F, r: R, testType: new () => USP);
+    constructor(ctx: IContext, f: F, r: R, uspType: new () => USP);
     getNew(): USP;
     private init;
     private uploadChunk;
