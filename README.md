@@ -232,6 +232,7 @@ const uploader = async (ctx: IContext, filePath: string) => {
                 }
               }
             })
+         ins.run()
 
 
 ```
