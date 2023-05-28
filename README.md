@@ -46,16 +46,17 @@
                 uploadUrl: '/2/upload',
                 mergeUrl: '/2/merge',
                 touchUrl: '/2/init',
-                testChunks: false,
-                withCredentials: 'include',
             }
             const up = uploader(ctx, file)
             up.on('progress', e => {
                 console.log('progess', e)
             })
+            up.on('success', e => {
+                console.log('success', e)
+                alert(e.url)
+            })
             up.on('complete', e => {
                 console.log('complete', e)
-                alert(e.url)
             })
             up.run()
         }
@@ -188,15 +189,14 @@ const uploader = async (ctx: IContext, filePath: string) => {
                 uploadUrl: '/2/upload',
                 mergeUrl: '/2/merge',
                 touchUrl: '/2/init',
-                testChunks: false,
-                withCredentials: 'include',
+
             }
             const up = uploader(ctx, file)
             up.on('progress', e => {
                 console.log('progess', e)
             })
-            up.on('complete', e => {
-                console.log('complete', e)
+            up.on('success', e => {
+                console.log('success', e)
                 alert(e.url)
             })
             up.run()
@@ -208,13 +208,11 @@ const uploader = async (ctx: IContext, filePath: string) => {
           maxConcurrency: 5,
           totalSize: 0,
           chunkSize: 1024 * 1024,
-          uploadUrl: 'https://tiyee.cn/2/uploader/upload',
-          mergeUrl: 'https://tiyee.cn/2/uploader/merge',
-          touchUrl: 'https://tiyee.cn/2/uploader/init',
+          uploadUrl: '/2/uploader/upload',
+          mergeUrl: '/2/uploader/merge',
+          touchUrl: '/2/uploader/init',
           testChunks: false,
-          verfiyUrl: '',
-          headers: { Token: '' },
-          withCredentials: 'include',
+
         }
          uploader(ctx, filePath).then(ins=>{
           ins.on('progress', e => {

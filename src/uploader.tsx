@@ -1,6 +1,7 @@
 /** @format */
 
 import SparkMD5 from 'spark-md5'
+import {IRequestOptions} from './request'
 export interface IFileHandle {
     read(start: number, length: number, success: (params: ArrayBuffer) => void, fail: (e: Error) => void): void
     digest(success: (params: string) => void, fail: (e: Error) => void): void
@@ -33,20 +34,17 @@ export interface IRequest {
 export interface IURLSearchParams {
     set(k: string, v: string): void
     toString(): string
+    append(k: string, v: string): void
+    delete(k: string): void
 }
 
 interface IProgress {
     uploadedSize: number
     totalSize: number
 }
-export const enum Event {
-    Progress = 'progress',
-    Retry = 'retry',
-    Success = 'success',
-    Fail = 'fail',
-    Complete = 'complete',
-}
-export interface IContext {
+
+export type HanleEvent = 'progress' | 'retry' | 'success' | 'fail' | 'complete'
+export interface IContext extends IRequestOptions {
     maxConcurrency: number
     totalSize: number
     chunkSize: number
@@ -54,9 +52,6 @@ export interface IContext {
     touchUrl: string
     uploadUrl: string
     mergeUrl: string
-    verfiyUrl: string
-    headers: Record<string, string>
-    withCredentials: RequestCredentials
 }
 const enum UploadStage {
     InitializeStatus = 0,
@@ -200,10 +195,12 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
                     proc()
                 })
             }),
-        ).then((values: any) => {
-            console.log(values)
-            this.merge(d.upload_id)
-        })
+        )
+            .then((values: any) => {
+                console.log(values)
+                this.merge(d.upload_id)
+            })
+            .catch(e => console.log(e))
     }
     private success(d: IInitRet) {
         console.log('success', d)
@@ -235,20 +232,20 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
             this.fail,
         )
     }
-    public on(event: Event, callback: (e: any) => void) {
+    public on(event: HanleEvent, callback: (e: any) => void) {
         switch (event) {
-            case Event.Progress:
+            case 'progress':
                 this.progress = callback
                 break
-            case Event.Retry:
+            case 'retry':
                 break
-            case Event.Success:
+            case 'success':
                 this.success = callback
                 break
-            case Event.Fail:
+            case 'fail':
                 this.fail = callback
                 break
-            case Event.Complete:
+            case 'complete':
                 this.complete = callback
                 break
         }

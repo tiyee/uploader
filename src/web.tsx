@@ -83,8 +83,8 @@ class WebRequest implements IRequest {
         resolve: (res: IInitRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {touchUrl, headers, withCredentials} = ctx
-        const opts = {credentials: withCredentials, params, headers, data: hexHash}
+        const {touchUrl} = ctx
+        const opts = {...ctx, params, data: hexHash}
         this.request('post', touchUrl, opts)
             .then((data: IJsonRet<IInitRet>) => {
                 resolve(data.data)
@@ -101,8 +101,8 @@ class WebRequest implements IRequest {
         resolve: (res: IUploadPartRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {uploadUrl, headers, withCredentials} = ctx
-        const opts = {credentials: withCredentials, params, headers, data: chunk}
+        const {uploadUrl} = ctx
+        const opts = {...ctx, params, data: chunk}
         this.request('post', uploadUrl, opts)
             .then((data: IJsonRet<IUploadPartRet>) => {
                 resolve(data.data)
@@ -119,8 +119,8 @@ class WebRequest implements IRequest {
         resolve: (res: IInitRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {mergeUrl, headers, withCredentials} = ctx
-        const opts = {credentials: withCredentials, params, headers, data: chunks}
+        const {mergeUrl} = ctx
+        const opts = {...ctx, params, data: chunks}
         this.request('post', mergeUrl, opts)
             .then((data: IJsonRet<IInitRet>) => {
                 resolve(data.data)

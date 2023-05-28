@@ -1,4 +1,5 @@
 /** @format */
+import { IRequestOptions } from './request';
 export interface IFileHandle {
     read(start: number, length: number, success: (params: ArrayBuffer) => void, fail: (e: Error) => void): void;
     digest(success: (params: string) => void, fail: (e: Error) => void): void;
@@ -12,15 +13,11 @@ export interface IRequest {
 export interface IURLSearchParams {
     set(k: string, v: string): void;
     toString(): string;
+    append(k: string, v: string): void;
+    delete(k: string): void;
 }
-export declare const enum Event {
-    Progress = "progress",
-    Retry = "retry",
-    Success = "success",
-    Fail = "fail",
-    Complete = "complete"
-}
-export interface IContext {
+export declare type HanleEvent = 'progress' | 'retry' | 'success' | 'fail' | 'complete';
+export interface IContext extends IRequestOptions {
     maxConcurrency: number;
     totalSize: number;
     chunkSize: number;
@@ -28,9 +25,6 @@ export interface IContext {
     touchUrl: string;
     uploadUrl: string;
     mergeUrl: string;
-    verfiyUrl: string;
-    headers: Record<string, string>;
-    withCredentials: RequestCredentials;
 }
 declare const enum UploadStage {
     InitializeStatus = 0,
@@ -81,7 +75,7 @@ export declare class Uploader<F extends IFileHandle, R extends IRequest, USP ext
     private progress;
     private complete;
     private merge;
-    on(event: Event, callback: (e: any) => void): void;
+    on(event: HanleEvent, callback: (e: any) => void): void;
     run(): void;
 }
 export {};
