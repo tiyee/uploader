@@ -141,10 +141,7 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
         params.set('upload_id', upload_id)
         params.set('index', idx.toString())
 
-        const decoder = new TextDecoder('utf-8')
-        const s = decoder.decode(chunk)
-
-        params.set('digest', SparkMD5.hash(s))
+        params.set('digest', SparkMD5.ArrayBuffer.hash(chunk))
         this.r.chunkRequest(
             this.ctx,
             params,
