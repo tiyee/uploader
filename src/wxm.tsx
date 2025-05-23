@@ -104,13 +104,13 @@ class WxmRequest implements IRequest {
         resolve: (res: IInitRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {touchUrl} = ctx
+        const {touchUrl, headers} = ctx
         wx.request({
             url: touchUrl + '?' + params.toString(),
             data: hexHash,
             dataType: 'json',
             method: 'POST',
-            header: {
+            header: headers ?? {
                 'content-type': 'application/octet-stream',
             },
             success(resp) {
@@ -130,13 +130,14 @@ class WxmRequest implements IRequest {
         resolve: (res: IUploadPartRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {uploadUrl} = ctx
+        const {uploadUrl, headers} = ctx
+
         wx.request({
             url: uploadUrl + '?' + params.toString(),
             data: chunk,
             dataType: 'json',
             method: 'POST',
-            header: {
+            header: headers ?? {
                 'content-type': 'application/octet-stream',
             },
             success(resp) {
@@ -156,13 +157,14 @@ class WxmRequest implements IRequest {
         resolve: (res: IInitRet) => void,
         fail: (e: Error) => void,
     ): void {
-        const {mergeUrl} = ctx
+        const {mergeUrl, headers} = ctx
+
         wx.request({
             url: mergeUrl + '?' + params.toString(),
             data: chunks,
             dataType: 'json',
             method: 'POST',
-            header: {
+            header: headers ?? {
                 'content-type': 'application/octet-stream',
             },
             success(resp) {

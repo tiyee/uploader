@@ -1,4 +1,4 @@
-export declare type HttpMethod = 'get' | 'post' | 'delete' | 'put' | 'patch' | 'head' | 'options';
+export type HttpMethod = 'get' | 'post' | 'delete' | 'put' | 'patch' | 'head' | 'options';
 interface IResponseHook {
     (resp: Response): Response;
 }

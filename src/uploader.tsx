@@ -52,6 +52,7 @@ export interface IContext extends IRequestOptions {
     touchUrl: string
     uploadUrl: string
     mergeUrl: string
+    ext: string
 }
 const enum UploadStage {
     InitializeStatus = 0,
@@ -122,6 +123,7 @@ export class Uploader<F extends IFileHandle, R extends IRequest, USP extends IUR
                     params.set('digest', hexHash)
                     params.set('chunk_size', this.chunksize.toString())
                     params.set('ts', Date.now().toString())
+                    params.set('ext', this.ctx.ext)
                     this.r.initRequest(this.ctx, params, chunk, cb, this.fail)
                 },
                 e => {

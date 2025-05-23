@@ -66,11 +66,11 @@
 
 ## 监听事件
 
--   `success`，上传成功时触发，e = {"upload_id":"xxxxx","status":1,"url":"","chunks":[]},其中 status 定义 0:待上传，1：上传中，2：已完成，3：已失败
+- `success`，上传成功时触发，e = {"upload_id":"xxxxx","status":1,"url":"","chunks":[]},其中 status 定义 0:待上传，1：上传中，2：已完成，3：已失败
 
--   `fail`，上传失败时触发，e :Error
--   `complete`，上传成功或失败时触发，返回值同 success 或 fail
--   `progess`，上传进度变化时触发，返回内容如下 e={ uploadedSize: 1286679, totalSize: 1286679 }
+- `fail`，上传失败时触发，e :Error
+- `complete`，上传成功或失败时触发，返回值同 success 或 fail
+- `progess`，上传进度变化时触发，返回内容如下 e={ uploadedSize: 1286679, totalSize: 1286679 }
 
 ## 服务端接口
 
@@ -212,6 +212,7 @@ const uploader = async (ctx: IContext, filePath: string) => {
           mergeUrl: '/2/uploader/merge',
           touchUrl: '/2/uploader/init',
           testChunks: false,
+          headers:{} //如何有需要可以设置请求头
 
         }
          uploader(ctx, filePath).then(ins=>{

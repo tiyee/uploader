@@ -16,7 +16,7 @@ export interface IURLSearchParams {
     append(k: string, v: string): void;
     delete(k: string): void;
 }
-export declare type HanleEvent = 'progress' | 'retry' | 'success' | 'fail' | 'complete';
+export type HanleEvent = 'progress' | 'retry' | 'success' | 'fail' | 'complete';
 export interface IContext extends IRequestOptions {
     maxConcurrency: number;
     totalSize: number;
@@ -25,6 +25,7 @@ export interface IContext extends IRequestOptions {
     touchUrl: string;
     uploadUrl: string;
     mergeUrl: string;
+    ext: string;
 }
 declare const enum UploadStage {
     InitializeStatus = 0,

@@ -1,5 +1,4 @@
 /** @format */
-/// <reference types="wechat-miniprogram" />
 import { IFileHandle, IRequest, IURLSearchParams, Uploader } from 'uploader';
 import { IInitRet, IContext, IUploadPartRet } from 'uploader';
 declare class URLSearchParams implements IURLSearchParams {

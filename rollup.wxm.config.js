@@ -1,17 +1,19 @@
 /** @format */
 
-import path from 'path'
-import resolve from '@rollup/plugin-node-resolve' // 依赖引用插件
-import commonjs from '@rollup/plugin-commonjs' // commonjs模块转换插件
-import tslint from 'rollup-plugin-tslint'
-import ts from 'rollup-plugin-typescript2'
-import {terser} from 'rollup-plugin-terser'
-import typescript from 'typescript'
-import babel from 'rollup-plugin-babel'
-import builtins from 'rollup-plugin-node-builtins'
-import globals from 'rollup-plugin-node-globals'
+const path = require('path')
+const resolve = require('@rollup/plugin-node-resolve') // 依赖引用插件
+const commonjs = require('@rollup/plugin-commonjs') // commonjs模块转换插件
+const typescript = require('typescript')
+const {terser} = require('rollup-plugin-terser')
+const {default: babelPlugin} = require('rollup-plugin-babel')
+const ts = require('rollup-plugin-typescript2')
+const tslint = require('rollup-plugin-tslint')
+const builtins = require('rollup-plugin-node-builtins')
+const globals = require('rollup-plugin-node-globals')
+const babel = require('rollup-plugin-babel')
 const getPath = _path => path.resolve(__dirname, _path)
-import packageJSON from './package.json'
+
+const packageJSON = require('./package.json')
 const isDev = process.env.NODE_ENV !== 'production'
 console.log('isDev', isDev)
 const extensions = ['.js', '.tsx']
@@ -56,4 +58,11 @@ const outputMap = [
 
 const buildConf = options => Object.assign({}, commonConf, options)
 
-export default outputMap.map(output => buildConf({output: {name: packageJSON.name, ...output}}))
+module.exports = outputMap.map(output =>
+    buildConf({
+        output: {
+            name: packageJSON.name,
+            ...output,
+        },
+    }),
+)
